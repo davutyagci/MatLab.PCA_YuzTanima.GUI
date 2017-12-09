@@ -1,10 +1,10 @@
-function OutputName = Recognition(TestImage, m, A, Eigenfaces)
+function OutputName = Recognition(SecilenResim, m, A, Eigenfaces)
 % Recognizing step....
 %
 % Description: This function compares two faces by projecting the images into facespace and 
 % measuring the Euclidean distance between them.
 %
-% Argument:      TestImage              - Path of the input test image
+% Argument:      SecilenResim              - Path of the input test image
 %
 %                m                      - (M*Nx1) Mean of the training
 %                                         database, which is output of 'EigenfaceCore' function.
@@ -20,23 +20,20 @@ function OutputName = Recognition(TestImage, m, A, Eigenfaces)
 %
 % See also: RESHAPE, STRCAT
 
-% Original version by Amir Hossein Omidvarnia, October 2007
-%                     Email: aomidvar@ece.ut.ac.ir                  
-
 %%%%%%%%%%%%%%%%%%%%%%%% Projecting centered image vectors into facespace
 % All centered images are projected into facespace by multiplying in
 % Eigenface basis's. Projected vector of each face will be its corresponding
 % feature vector.
 
 ProjectedImages = [];
-Train_Number = size(Eigenfaces,2);
-for i = 1 : Train_Number
+Dizi_ResimSayi = size(Eigenfaces,2);
+for i = 1 : Dizi_ResimSayi
     temp = Eigenfaces'*A(:,i); % Projection of centered images into facespace
     ProjectedImages = [ProjectedImages temp]; 
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%% Extracting the PCA features from test image
-InputImage = imread(TestImage);
+InputImage = imread(SecilenResim);
 temp = InputImage(:,:,1);
 
 [irow icol] = size(temp);
@@ -51,7 +48,7 @@ ProjectedTestImage = Eigenfaces'*Difference; % Test image feature vector
 % training database.
 
 Euc_dist = [];
-for i = 1 : Train_Number
+for i = 1 : Dizi_ResimSayi
     q = ProjectedImages(:,i);
     temp = ( norm( ProjectedTestImage - q ) )^2;
     Euc_dist = [Euc_dist temp];

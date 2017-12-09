@@ -21,11 +21,11 @@ function [m, A, Eigenfaces] = EigenfaceCore(T)
  
 %%%%%%%%%%%%%%%%%%%%%%%% Calculating the mean image 
 m = mean(T,2); % Computing the average face image m = (1/P)*sum(Tj's)    (j = 1 : P)
-Train_Number = size(T,2);
+Dizi_ResimSayi = size(T,2);
 
 %%%%%%%%%%%%%%%%%%%%%%%% Calculating the deviation of each image from mean image
 A = [];  
-for i = 1 : Train_Number
+for i = 1 : Dizi_ResimSayi
     temp = double(T(:,i)) - m; % Computing the difference image for each image in the training set Ai = Ti - m
     A = [A temp]; % Merging all centered images
 end
